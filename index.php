@@ -1,5 +1,5 @@
 <?php
-require_once 'config/database.php';
+require 'config/database.php';
 $obj = new Query();
-echo $obj->getData();
-?>`
+$obj->getData();
+?>
