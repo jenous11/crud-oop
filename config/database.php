@@ -1,19 +1,22 @@
 <?php
 class Database
 {
-    private $servername = 'localhost';
-    private $username   = 'root';
-    private $password   = 'chelse@11';
-    private $dbname     = 'php_oop';
+    private $servername = "localhost";
+    private $username   = "root";
+    private $password   = "chelse@11";
+    private $dbname     = "php_oop";
     //method
     protected function connect()
     {
-        try {
+        try 
+            {
             $pdo = new PDO("mysql:host=" . $this->servername . ";dbname=" . $this->dbname, $this->username, $this->password);
-            $this->connect()->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             echo ("connected successfully");
             return $pdo;
-        } catch (PDOException $e) {
+            } 
+            catch (PDOException $e) 
+            {
             echo "error " . $e->getMessage();
         }
     }
@@ -25,23 +28,25 @@ class Query extends Database
     public function getData($table,$fields)
     {
         // to get data
-        try {
+        try 
+        {
             $sql = "SELECT $fields FROM $table";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             print_r($result);
-            $stmt = null;
             return $result;
-        } catch (PDOException $e) {
+        } catch (PDOException $e)
+            {
             echo "error: " . $e->getMessage();
         }
     }
     //function to insert data
     public function insertData($table)
     {
-        try{
-        $sql = "INSERT INTO $table ('name', email,phone ) VALUES ('jenous','jenousdongol11@gmail.com','9818084977');";
+        try
+        {
+        $sql = "INSERT INTO $table (`name`, email,phone ) VALUES ('jenous','jenousdongol11@gmail.com','9818084977');";
         $stmt= $this->connect()->prepare($sql);
         $stmt->execute();
         $stmt=null;
