@@ -23,7 +23,7 @@ $data = array(
 // print_r($obj->getData( 'users','*','id',$id));
 
 
-$id = 12;
+$id = 11;
 $result = $obj->getDataById('users', '*', 'id', $id);
 
 if (!empty($result)) {
@@ -38,9 +38,9 @@ if (!empty($result)) {
 
 //Update Data
 $data = array(
-    'name' =>"Ganesh",
-    'email' => "ganeshh@gmail.com",
-    'phone'=>"9818089999" 
+    'name' =>"Zyren",
+    'email' => "zyren.com",
+    'phone'=>"98510050320" 
 );
 
 $res = $obj->updateData('users',$data,'id',$id);
