@@ -9,7 +9,7 @@ class Database
     protected function connect()
     {
         try {
-            $pdo = new PDO("mysql:host=".$this->servername.";dbname=".$this->dbname, $this->username, $this->password);
+            $pdo = new PDO("mysql:host=" . $this->servername . ";dbname=" . $this->dbname, $this->username, $this->password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             // echo ("connected successfully");
             return $pdo;
@@ -39,7 +39,7 @@ class Query extends Database
 
     public function getData($table, $fields)
     {
-        // to get data
+        // to get all data
         try {
             $sql = "SELECT $fields FROM $table";
             $stmt = $this->connect()->prepare($sql);
@@ -54,7 +54,7 @@ class Query extends Database
     public function insertData($table, $param)
     {
         try {
-            echo"<pre>";
+            echo "<pre>";
             // print_r($param);
             $fields = array();
             $values = array();
@@ -82,7 +82,7 @@ class Query extends Database
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute();
             // $stmt = null;
-            }catch (PDOException $e){
+        } catch (PDOException $e) {
             echo "error: " . $e->getMessage();
         }
     }
@@ -90,21 +90,21 @@ class Query extends Database
     // checking first hand for deletion of data 
     // function to delete data
 
-    public function deleteData($table,$field,$id)
+    public function deleteData($table, $field, $id)
     {
-         $sql = "DELETE FROM $table WHERE $field=$id";
+        $sql = "DELETE FROM $table WHERE $field=$id";
         $result = $this->connect()->query($sql);
         return $result;
     }
-    
+
     // function to get single record
 
-       //method
-    public function getDataById($table, $fields , $whereField ,$id)
+    //method
+    public function getDataById($table, $fields, $whereField, $id)
     {
         // to get data
         try {
-             $sql = "SELECT $fields FROM $table WHERE $whereField = $id";
+            $sql = "SELECT $fields FROM $table WHERE $whereField = $id";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -113,4 +113,40 @@ class Query extends Database
             echo "error: " . $e->getMessage();
         }
     }
+
+    //code for updating the data
+
+      //function to update data
+    public function updateData($table, $param, $whereField, $id)
+    {
+        try {
+            $sql = "UPDATE  $table SET";
+
+            $length = count($param);
+            $i=1;
+            foreach ($param as $key => $value) {
+                // $sql.=" $key= $value.','";
+                if($i==$length)
+                    $sql.=" $key='$value'";
+                else{
+                    $sql.=" $key='$value' , ";
+                    $i++;
+                }
+            }
+             $sql.="WHERE $whereField=$id";
+            // echo $sql;
+            // exit;
+
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute();
+            // $stmt = null;
+        } catch (PDOException $e) {
+            echo "error: " . $e->getMessage();
+        }
+    }
+
+
+
+
+
 }

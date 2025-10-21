@@ -5,9 +5,9 @@ $obj = new Query();
 
 //making and associate array to insert data dynamically
 $data = array(
-    'name' =>'Shamit',
-    'email' => "shamit@gmail.com",
-    'phone'=>"9818000000" 
+    'name' =>'joy',
+    'email' => "joy@gmail.com",
+    'phone'=>"9818089099" 
 );
 
 //insert data
@@ -22,20 +22,28 @@ $data = array(
 // $obj->getDataById( 'users','*','id',$id );
 // print_r($obj->getData( 'users','*','id',$id));
 
-$id=12;
-// $result=$obj->getDataById( 'users','*','id',$id );
 
-// if($result->num_rows>0){
-//     while($row =$result->fetch_assoc()){
-//         echo "<pre>";
-//         print_r($row);
-//     }
-// }
-// exit;
+$id = 12;
+$result = $obj->getDataById('users', '*', 'id', $id);
 
-print_r($obj->getData( 'users','*','id',$id));
+if (!empty($result)) {
+    foreach ($result as $row) {
+        echo "<pre>";
+        print_r($row);
+        echo "</pre>";
+    }
+} else {
+    echo "No record found.";
+}
 
+//Update Data
+$data = array(
+    'name' =>"Ganesh",
+    'email' => "ganeshh@gmail.com",
+    'phone'=>"9818089999" 
+);
 
+$res = $obj->updateData('users',$data,'id',$id);
 ?>
 
 
